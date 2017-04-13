@@ -57,43 +57,121 @@ include CMakeFiles/websocket.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/websocket.dir/flags.make
 
-CMakeFiles/websocket.dir/main.cpp.o: CMakeFiles/websocket.dir/flags.make
-CMakeFiles/websocket.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slayzz/dev/cpp/websocket/debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/websocket.dir/main.cpp.o"
-	/usr/bin/g++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/websocket.dir/main.cpp.o -c /home/slayzz/dev/cpp/websocket/main.cpp
+CMakeFiles/websocket.dir/main.c++.o: CMakeFiles/websocket.dir/flags.make
+CMakeFiles/websocket.dir/main.c++.o: ../main.c++
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slayzz/dev/cpp/websocket/debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/websocket.dir/main.c++.o"
+	/usr/bin/g++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/websocket.dir/main.c++.o -c /home/slayzz/dev/cpp/websocket/main.c++
 
-CMakeFiles/websocket.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/websocket.dir/main.cpp.i"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slayzz/dev/cpp/websocket/main.cpp > CMakeFiles/websocket.dir/main.cpp.i
+CMakeFiles/websocket.dir/main.c++.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/websocket.dir/main.c++.i"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slayzz/dev/cpp/websocket/main.c++ > CMakeFiles/websocket.dir/main.c++.i
 
-CMakeFiles/websocket.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/websocket.dir/main.cpp.s"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slayzz/dev/cpp/websocket/main.cpp -o CMakeFiles/websocket.dir/main.cpp.s
+CMakeFiles/websocket.dir/main.c++.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/websocket.dir/main.c++.s"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slayzz/dev/cpp/websocket/main.c++ -o CMakeFiles/websocket.dir/main.c++.s
 
-CMakeFiles/websocket.dir/main.cpp.o.requires:
+CMakeFiles/websocket.dir/main.c++.o.requires:
 
-.PHONY : CMakeFiles/websocket.dir/main.cpp.o.requires
+.PHONY : CMakeFiles/websocket.dir/main.c++.o.requires
 
-CMakeFiles/websocket.dir/main.cpp.o.provides: CMakeFiles/websocket.dir/main.cpp.o.requires
-	$(MAKE) -f CMakeFiles/websocket.dir/build.make CMakeFiles/websocket.dir/main.cpp.o.provides.build
-.PHONY : CMakeFiles/websocket.dir/main.cpp.o.provides
+CMakeFiles/websocket.dir/main.c++.o.provides: CMakeFiles/websocket.dir/main.c++.o.requires
+	$(MAKE) -f CMakeFiles/websocket.dir/build.make CMakeFiles/websocket.dir/main.c++.o.provides.build
+.PHONY : CMakeFiles/websocket.dir/main.c++.o.provides
 
-CMakeFiles/websocket.dir/main.cpp.o.provides.build: CMakeFiles/websocket.dir/main.cpp.o
+CMakeFiles/websocket.dir/main.c++.o.provides.build: CMakeFiles/websocket.dir/main.c++.o
+
+
+CMakeFiles/websocket.dir/src/handler.c++.o: CMakeFiles/websocket.dir/flags.make
+CMakeFiles/websocket.dir/src/handler.c++.o: ../src/handler.c++
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slayzz/dev/cpp/websocket/debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/websocket.dir/src/handler.c++.o"
+	/usr/bin/g++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/websocket.dir/src/handler.c++.o -c /home/slayzz/dev/cpp/websocket/src/handler.c++
+
+CMakeFiles/websocket.dir/src/handler.c++.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/websocket.dir/src/handler.c++.i"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slayzz/dev/cpp/websocket/src/handler.c++ > CMakeFiles/websocket.dir/src/handler.c++.i
+
+CMakeFiles/websocket.dir/src/handler.c++.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/websocket.dir/src/handler.c++.s"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slayzz/dev/cpp/websocket/src/handler.c++ -o CMakeFiles/websocket.dir/src/handler.c++.s
+
+CMakeFiles/websocket.dir/src/handler.c++.o.requires:
+
+.PHONY : CMakeFiles/websocket.dir/src/handler.c++.o.requires
+
+CMakeFiles/websocket.dir/src/handler.c++.o.provides: CMakeFiles/websocket.dir/src/handler.c++.o.requires
+	$(MAKE) -f CMakeFiles/websocket.dir/build.make CMakeFiles/websocket.dir/src/handler.c++.o.provides.build
+.PHONY : CMakeFiles/websocket.dir/src/handler.c++.o.provides
+
+CMakeFiles/websocket.dir/src/handler.c++.o.provides.build: CMakeFiles/websocket.dir/src/handler.c++.o
+
+
+CMakeFiles/websocket.dir/src/server/server.c++.o: CMakeFiles/websocket.dir/flags.make
+CMakeFiles/websocket.dir/src/server/server.c++.o: ../src/server/server.c++
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slayzz/dev/cpp/websocket/debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/websocket.dir/src/server/server.c++.o"
+	/usr/bin/g++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/websocket.dir/src/server/server.c++.o -c /home/slayzz/dev/cpp/websocket/src/server/server.c++
+
+CMakeFiles/websocket.dir/src/server/server.c++.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/websocket.dir/src/server/server.c++.i"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slayzz/dev/cpp/websocket/src/server/server.c++ > CMakeFiles/websocket.dir/src/server/server.c++.i
+
+CMakeFiles/websocket.dir/src/server/server.c++.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/websocket.dir/src/server/server.c++.s"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slayzz/dev/cpp/websocket/src/server/server.c++ -o CMakeFiles/websocket.dir/src/server/server.c++.s
+
+CMakeFiles/websocket.dir/src/server/server.c++.o.requires:
+
+.PHONY : CMakeFiles/websocket.dir/src/server/server.c++.o.requires
+
+CMakeFiles/websocket.dir/src/server/server.c++.o.provides: CMakeFiles/websocket.dir/src/server/server.c++.o.requires
+	$(MAKE) -f CMakeFiles/websocket.dir/build.make CMakeFiles/websocket.dir/src/server/server.c++.o.provides.build
+.PHONY : CMakeFiles/websocket.dir/src/server/server.c++.o.provides
+
+CMakeFiles/websocket.dir/src/server/server.c++.o.provides.build: CMakeFiles/websocket.dir/src/server/server.c++.o
+
+
+CMakeFiles/websocket.dir/src/signal_handlers.c++.o: CMakeFiles/websocket.dir/flags.make
+CMakeFiles/websocket.dir/src/signal_handlers.c++.o: ../src/signal_handlers.c++
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/slayzz/dev/cpp/websocket/debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/websocket.dir/src/signal_handlers.c++.o"
+	/usr/bin/g++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/websocket.dir/src/signal_handlers.c++.o -c /home/slayzz/dev/cpp/websocket/src/signal_handlers.c++
+
+CMakeFiles/websocket.dir/src/signal_handlers.c++.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/websocket.dir/src/signal_handlers.c++.i"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/slayzz/dev/cpp/websocket/src/signal_handlers.c++ > CMakeFiles/websocket.dir/src/signal_handlers.c++.i
+
+CMakeFiles/websocket.dir/src/signal_handlers.c++.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/websocket.dir/src/signal_handlers.c++.s"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/slayzz/dev/cpp/websocket/src/signal_handlers.c++ -o CMakeFiles/websocket.dir/src/signal_handlers.c++.s
+
+CMakeFiles/websocket.dir/src/signal_handlers.c++.o.requires:
+
+.PHONY : CMakeFiles/websocket.dir/src/signal_handlers.c++.o.requires
+
+CMakeFiles/websocket.dir/src/signal_handlers.c++.o.provides: CMakeFiles/websocket.dir/src/signal_handlers.c++.o.requires
+	$(MAKE) -f CMakeFiles/websocket.dir/build.make CMakeFiles/websocket.dir/src/signal_handlers.c++.o.provides.build
+.PHONY : CMakeFiles/websocket.dir/src/signal_handlers.c++.o.provides
+
+CMakeFiles/websocket.dir/src/signal_handlers.c++.o.provides.build: CMakeFiles/websocket.dir/src/signal_handlers.c++.o
 
 
 # Object files for target websocket
 websocket_OBJECTS = \
-"CMakeFiles/websocket.dir/main.cpp.o"
+"CMakeFiles/websocket.dir/main.c++.o" \
+"CMakeFiles/websocket.dir/src/handler.c++.o" \
+"CMakeFiles/websocket.dir/src/server/server.c++.o" \
+"CMakeFiles/websocket.dir/src/signal_handlers.c++.o"
 
 # External object files for target websocket
 websocket_EXTERNAL_OBJECTS =
 
-websocket: CMakeFiles/websocket.dir/main.cpp.o
+websocket: CMakeFiles/websocket.dir/main.c++.o
+websocket: CMakeFiles/websocket.dir/src/handler.c++.o
+websocket: CMakeFiles/websocket.dir/src/server/server.c++.o
+websocket: CMakeFiles/websocket.dir/src/signal_handlers.c++.o
 websocket: CMakeFiles/websocket.dir/build.make
 websocket: /usr/lib64/libboost_filesystem.so
 websocket: /usr/lib64/libboost_system.so
 websocket: CMakeFiles/websocket.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/slayzz/dev/cpp/websocket/debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable websocket"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/slayzz/dev/cpp/websocket/debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable websocket"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/websocket.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -101,7 +179,10 @@ CMakeFiles/websocket.dir/build: websocket
 
 .PHONY : CMakeFiles/websocket.dir/build
 
-CMakeFiles/websocket.dir/requires: CMakeFiles/websocket.dir/main.cpp.o.requires
+CMakeFiles/websocket.dir/requires: CMakeFiles/websocket.dir/main.c++.o.requires
+CMakeFiles/websocket.dir/requires: CMakeFiles/websocket.dir/src/handler.c++.o.requires
+CMakeFiles/websocket.dir/requires: CMakeFiles/websocket.dir/src/server/server.c++.o.requires
+CMakeFiles/websocket.dir/requires: CMakeFiles/websocket.dir/src/signal_handlers.c++.o.requires
 
 .PHONY : CMakeFiles/websocket.dir/requires
 

@@ -1,5 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/websocket.dir/main.cpp.o"
+  "CMakeFiles/websocket.dir/main.c++.o"
+  "CMakeFiles/websocket.dir/src/handler.c++.o"
+  "CMakeFiles/websocket.dir/src/server/server.c++.o"
+  "CMakeFiles/websocket.dir/src/signal_handlers.c++.o"
   "websocket.pdb"
   "websocket"
 )

@@ -33,18 +33,8 @@ void on_message(server *s, websocketpp::connection_hdl hdl, message_ptr msg) {
 }
 
 int main(int argc, char *argv[]) {
-struct event_base* eventBase;
-struct event_config* eventConfig;
-
-event_config_avoid_method(eventConfig, "select");
-
-eventBase = event_base_new_with_config(eventConfig);
-if (eventBase) {
-  event_config_free(eventConfig);
-}
-
-event_base_dispatch(eventBase);
-//  Server serv(8000);
+  Server server(8000);
+  server.run();
 //  server echo_server;
 
 //  try

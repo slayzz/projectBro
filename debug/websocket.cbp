@@ -44,7 +44,6 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/slayzz/dev/cpp/websocket/lib/websocketpp/websocketpp"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/../../../../include/c++/6.3.1"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/../../../../include/c++/6.3.1/x86_64-pc-linux-gnu"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/../../../../include/c++/6.3.1/backward"/>
@@ -67,7 +66,6 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/slayzz/dev/cpp/websocket/lib/websocketpp/websocketpp"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/../../../../include/c++/6.3.1"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/../../../../include/c++/6.3.1/x86_64-pc-linux-gnu"/>
 					<Add directory="/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/../../../../include/c++/6.3.1/backward"/>
@@ -84,7 +82,25 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/slayzz/dev/cpp/websocket/main.cpp">
+		<Unit filename="/home/slayzz/dev/cpp/websocket/main.c++">
+			<Option target="websocket"/>
+		</Unit>
+		<Unit filename="/home/slayzz/dev/cpp/websocket/src/handler.c++">
+			<Option target="websocket"/>
+		</Unit>
+		<Unit filename="/home/slayzz/dev/cpp/websocket/src/handler.h">
+			<Option target="websocket"/>
+		</Unit>
+		<Unit filename="/home/slayzz/dev/cpp/websocket/src/server/server.c++">
+			<Option target="websocket"/>
+		</Unit>
+		<Unit filename="/home/slayzz/dev/cpp/websocket/src/server/server.hpp">
+			<Option target="websocket"/>
+		</Unit>
+		<Unit filename="/home/slayzz/dev/cpp/websocket/src/signal_handlers.c++">
+			<Option target="websocket"/>
+		</Unit>
+		<Unit filename="/home/slayzz/dev/cpp/websocket/src/signal_handlers.hpp">
 			<Option target="websocket"/>
 		</Unit>
 		<Unit filename="/home/slayzz/dev/cpp/websocket/CMakeLists.txt">

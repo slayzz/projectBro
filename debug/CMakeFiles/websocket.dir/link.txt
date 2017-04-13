@@ -1,1 +1,1 @@
-/usr/bin/g++   -std=c++11 -g   CMakeFiles/websocket.dir/main.cpp.o  -o websocket /usr/lib64/libboost_filesystem.so /usr/lib64/libboost_system.so 
+/usr/bin/g++   -std=c++11 -levent -g   CMakeFiles/websocket.dir/main.c++.o CMakeFiles/websocket.dir/src/handler.c++.o CMakeFiles/websocket.dir/src/server/server.c++.o CMakeFiles/websocket.dir/src/signal_handlers.c++.o  -o websocket /usr/lib64/libboost_filesystem.so /usr/lib64/libboost_system.so 

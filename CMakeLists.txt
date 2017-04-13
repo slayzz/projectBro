@@ -6,7 +6,8 @@ project(websocket)
 #set (SOURCE_EXE main.cpp src/handler.cpp src/handler.h)
 set(SOURCE_EXE main.c++)
 #set(SOURCE_LIB src/server/server.cpp)
-set(CMAKE_CXX_FLAGS "-std=c++11")
+#set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -levent")
+set(CMAKE_CXX_FLAGS "-std=c++11 -levent")
 #set(HEADER_FILES src/handler.h src/server/server.hpp)
 
 

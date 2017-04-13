@@ -18,30 +18,39 @@
 
 #include <iostream>
 #include <string.h>
+#include <event2/event.h>
 
-typedef unsigned int SOCKET;
+typedef evutil_socket_t SOCKET;
 
 const unsigned int BUFFER_LENGTH = 2048;
 
 class Server {
 public:
-  Server(int port);
+  explicit Server(int port);
   ~Server();
 
   void closeSocket();
+  void run();
+  struct event_base* getEventBase();
 private:
-  SOCKET socketFd;
-  char buffer[BUFFER_LENGTH];
+  SOCKET socketFd_;
+  char buffer_[BUFFER_LENGTH];
 
   static const unsigned int MAX_CONNECTS;
+  struct event_base* eventBase_;
 
-
-  void formResponse(char*, SOCKET);
   int sockInit();
   int sockClose();
   int sockShutdown();
-  void acceptConnections();
   void clearSocket();
+
+  void formResponse(char*, SOCKET);
+//  void acceptConnections(struct bufferevent *bev, void *ctx);
+
+  void static readClientSocket(struct bufferevent *bev, void *ctx);
+  void static errorHandlingClientSocket(struct bufferevent *bev, short error,
+                                 void *ctx);
+  void static doAccept(SOCKET listener, short event, void *arg);
 };
 
 #endif
