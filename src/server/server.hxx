@@ -16,25 +16,24 @@
   #include <unistd.h> /* Needed for close() */
 #endif
 
+#include "HttpEvent.hxx"
 #include <iostream>
 #include <string.h>
 #include <event2/event.h>
+#include "../globals.hxx"
 
-typedef evutil_socket_t SOCKET;
-
-const unsigned int BUFFER_LENGTH = 2048;
 
 class Server {
 public:
-  explicit Server(int port);
+  Server(uint16_t port);
   ~Server();
 
-  void closeSocket();
   void run();
-  struct event_base* getEventBase();
+  void closeSocket();
 private:
-  SOCKET socketFd_;
-  char buffer_[BUFFER_LENGTH];
+  HttpEvent* httpEvent_;
+  Types::SOCKET socketFd_;
+
 
   static const unsigned int MAX_CONNECTS;
   struct event_base* eventBase_;
@@ -43,14 +42,6 @@ private:
   int sockClose();
   int sockShutdown();
   void clearSocket();
-
-  void formResponse(char*, SOCKET);
-//  void acceptConnections(struct bufferevent *bev, void *ctx);
-
-  void static readClientSocket(struct bufferevent *bev, void *ctx);
-  void static errorHandlingClientSocket(struct bufferevent *bev, short error,
-                                 void *ctx);
-  void static doAccept(SOCKET listener, short event, void *arg);
 };
 
 #endif

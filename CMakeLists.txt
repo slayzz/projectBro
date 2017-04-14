@@ -4,7 +4,7 @@ project(websocket)
 #include_directories(src)
 
 #set (SOURCE_EXE main.cpp src/handler.cpp src/handler.h)
-set(SOURCE_EXE main.c++)
+set(SOURCE_EXE main.cxx src/server/RequestHandler.cxx src/server/RequestHandler.hxx)
 #set(SOURCE_LIB src/server/server.cpp)
 #set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -levent")
 set(CMAKE_CXX_FLAGS "-std=c++11 -levent")
@@ -13,15 +13,15 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -levent")
 
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 
-file(GLOB_RECURSE SRC "src/*.c++")
-file(GLOB_RECURSE HEADERS "src/*.hpp" "src/*hpp")
+file(GLOB_RECURSE SRC "src/*.cxx")
+file(GLOB_RECURSE HEADERS "src/*.hxx")
 
 
 #add_library(lib src/handler.cpp src/server/server.cpp ${HEADER_FILES})
 #add_library(lib ${SOURCE_LIB})
 #add_executable(${PROJECT_NAME} ${SOURCE_EXE} ${HEADER_FILES})
 #add_executable(${PROJECT_NAME} ${SOURCE_EXE} ${SRC} ${HEADER_FILE})
-add_executable(${PROJECT_NAME} ${SOURCE_EXE} ${SRC} ${HEADERS})
+add_executable(${PROJECT_NAME} ${SOURCE_EXE} ${SRC} ${HEADERS} src/globals.hxx)
 
 
 #target_link_libraries(${PROJECT_NAME}

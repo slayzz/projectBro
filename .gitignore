@@ -73,3 +73,5 @@ debug
 *.dll
 *.exe
 
+.idea
+cmake-build-debug
