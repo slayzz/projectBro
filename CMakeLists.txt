@@ -7,7 +7,7 @@ project(websocket)
 set(SOURCE_EXE main.cxx src/server/RequestHandler.cxx src/server/RequestHandler.hxx)
 #set(SOURCE_LIB src/server/server.cpp)
 #set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -levent")
-set(CMAKE_CXX_FLAGS "-std=c++11 -levent")
+set(CMAKE_CXX_FLAGS "-std=c++11 -levent -pthread")
 #set(HEADER_FILES src/handler.h src/server/server.hpp)
 
 
@@ -21,7 +21,7 @@ file(GLOB_RECURSE HEADERS "src/*.hxx")
 #add_library(lib ${SOURCE_LIB})
 #add_executable(${PROJECT_NAME} ${SOURCE_EXE} ${HEADER_FILES})
 #add_executable(${PROJECT_NAME} ${SOURCE_EXE} ${SRC} ${HEADER_FILE})
-add_executable(${PROJECT_NAME} ${SOURCE_EXE} ${SRC} ${HEADERS} src/globals.hxx)
+add_executable(${PROJECT_NAME} ${SOURCE_EXE} ${SRC} ${HEADERS})
 
 
 #target_link_libraries(${PROJECT_NAME}
