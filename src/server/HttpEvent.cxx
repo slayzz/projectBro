@@ -5,23 +5,25 @@
 #include <event2/buffer.h>
 #include <evhttp.h>
 #include <cstring>
-#include <string>
-#include <cstdlib>
+
 #include "HttpEvent.hxx"
 
 HttpEvent::HttpEvent(Types::SOCKET& socket) : EventBase() {
   httpWatcher_ = evhttp_new(getEventBase());
   evhttp_accept_socket(httpWatcher_, socket);
-  installHandlers();
 }
 
 void HttpEvent::run() {
+  installHandlers();
   while(true) {
     event_base_dispatch(getEventBase());
   }
 }
 
 HttpEvent::~HttpEvent() {
+  for (auto handler : handlers_) {
+    delete handler;
+  }
   evhttp_free(httpWatcher_);
 }
 
@@ -33,12 +35,13 @@ evhttp *HttpEvent::getHttpEvent() const {
   return httpWatcher_;
 }
 
-
 void HttpEvent::installHandlers() {
   for(auto handler : handlers_) {
-    evhttp_set_cb(httpWatcher_, handler->getUrl().c_str(), &HttpEvent::handleRequest, handler);
+    evhttp_set_cb(httpWatcher_, handler->getUrl().c_str(),
+                  &HttpEvent::handleRequest, handler);
   }
-  evhttp_set_gencb(httpWatcher_, &HttpEvent::defaultHandler, 0);
+  evhttp_set_gencb(httpWatcher_, &HttpEvent::defaultHandler,
+                   new StaticHandler("web"));
 }
 
 void HttpEvent::handleRequest(struct evhttp_request *req, void *arg) {
@@ -47,39 +50,28 @@ void HttpEvent::handleRequest(struct evhttp_request *req, void *arg) {
 }
 
 void HttpEvent::defaultHandler(struct evhttp_request *req, void *arg) {
-  auto evb = evbuffer_new();
-  const size_t bufferSize = 10024;
-  const char serverName[] = "Ultra Server";
-  char buffer[bufferSize];
+  StaticHandler* staticHandler = static_cast<StaticHandler*>(arg);
+  try {
+    staticHandler->handle(req);
+  } catch(std::exception e) {
+    std::cout << e.what() << std::endl;
+    auto evb = evbuffer_new();
+    const size_t bufferSize = 1024;
+    const char serverName[] = "Ultra Server";
+    char buffer[bufferSize] = "<div>Cant Find This Path</div>";
 
-  int position = 0;
-  std::ifstream file("../web/html/index.html");
-  while(!file.eof()) {
-    file.get(buffer[position++]);
-  }
-  buffer[position-1] = '\0';
 
-  evbuffer_add(evb, buffer, strlen(buffer));
-
-//  evbuffer_add_printf(evb, "<HTML><HEAD><TITLE>%s Page</TITLE></HEAD><BODY>\n", serverName);
-// Add buffer
-//  evbuffer_add(evb, "<div>Lol</div>", 13);
-// Add formatted text
-//  evbuffer_add_printf(evb, "Your request is <B>%s</B> from <B>%s</B>.<BR/>Your user agent is '%s'\n",
-//                      req->uri, req->remote_host, evhttp_find_header(req->input_headers, "User-Agent"));
-// Add footer
-//  evbuffer_add_printf(evb, "</BODY></HTML>");
+    evbuffer_add(evb, buffer, strlen(buffer));
 
 // Set HTTP headers
-  evhttp_add_header(req->output_headers, "Server", serverName);
-  evhttp_add_header(req->output_headers, "Connection", "close");
-//  evhttp_add_header(req->output_headers, "Referrer-Policy", "no-referer");
-//  evhttp_remove_header(req->output_headers, "Referer");
+    evhttp_add_header(req->output_headers, "Server", serverName);
+    evhttp_add_header(req->output_headers, "Connection", "close");
+    evhttp_add_header(req->output_headers, "Content-Length",
+                      std::to_string(strlen(buffer)).c_str());
 
 // Send reply
-  evhttp_send_reply(req, HTTP_OK, "OK", evb);
-
-  file.close();
+    evhttp_send_reply(req, HTTP_NOTFOUND, "Not Found", evb);
 // Free memory
-  evbuffer_free(evb);
+    evbuffer_free(evb);
+  }
 }

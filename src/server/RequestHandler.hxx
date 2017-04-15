@@ -11,13 +11,5 @@ class RequestHandler {
   virtual std::string getUrl() const = 0;
 };
 
-class SimpleHandler : public RequestHandler {
- public:
-  SimpleHandler();
-  ~SimpleHandler();
-
-  virtual void handle(struct evhttp_request*) override;
-  virtual std::string getUrl() const override;
-};
 
 #endif //WEBSOCKET_REQUESTHANDLER_HXX

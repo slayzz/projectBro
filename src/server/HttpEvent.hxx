@@ -7,6 +7,7 @@
 #include "RequestHandler.hxx"
 #include "EventBase.hxx"
 #include "../globals.hxx"
+#include "handlers/StaticHandler.hxx"
 
 class HttpEvent : public EventBase {
  public:

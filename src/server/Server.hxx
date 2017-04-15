@@ -27,6 +27,7 @@ class Server {
 public:
   Server(uint16_t port);
   ~Server();
+  Server& operator=(const Server&) = delete;
 
   void run();
   void closeSocket();
@@ -34,14 +35,13 @@ private:
   HttpEvent* httpEvent_;
   Types::SOCKET socketFd_;
 
-
   static const unsigned int MAX_CONNECTS;
-  struct event_base* eventBase_;
 
   int sockInit();
   int sockClose();
   int sockShutdown();
   void clearSocket();
+  void installHandlers();
 };
 
 #endif

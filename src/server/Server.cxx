@@ -4,6 +4,8 @@
 #include <event2/bufferevent.h>
 
 #include "Server.hxx"
+#include "RequestHandler.hxx"
+#include "handlers/MainHandler.hxx"
 
 const unsigned int Server::MAX_CONNECTS = 5;
 
@@ -41,8 +43,13 @@ Server::Server(uint16_t port) {
   }
 }
 
+Server::~Server() {
+  clearSocket();
+}
+
 void Server::run() {
   listen(socketFd_, Server::MAX_CONNECTS);
+  installHandlers();
   httpEvent_->run();
 }
 
@@ -95,6 +102,7 @@ void Server::clearSocket() {
   close(socketFd_);
 }
 
-Server::~Server() {
-  clearSocket();
+void Server::installHandlers() {
+  httpEvent_->addHandler(new MainHandler());
 }
+
