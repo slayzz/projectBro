@@ -3,7 +3,7 @@ if (!window.WebSocket) {
 }
 
 // создать подключение
-var socket = new WebSocket("ws://localhost:8081");
+var socket = new WebSocket("ws://localhost:9000");
 
 // отправить сообщение из формы publish
 document.forms.publish.onsubmit = function() {

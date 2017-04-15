@@ -46,6 +46,9 @@ void HttpEvent::handleRequest(struct evhttp_request *req, void *arg) {
 void HttpEvent::defaultHandler(struct evhttp_request *req, void *arg) {
   auto evb = evbuffer_new();
   auto uri = evhttp_request_get_uri(req);
+  auto host = evhttp_request_get_host(req);
+  std::cout << uri << std::endl;
+  std::cout << host << std::endl;
   const char serverName[] = "Pipka";
   evbuffer_add_printf(evb, "<HTML><HEAD><TITLE>%s Page</TITLE></HEAD><BODY>\n", serverName);
 // Add buffer
