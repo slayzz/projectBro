@@ -2,12 +2,13 @@
 #define WEBSOCKET_REQUESTHANDLER_HXX
 #include <string>
 #include <functional>
+#include "Request.hxx"
 
 class RequestHandler {
  public:
   virtual ~RequestHandler() {};
 
-  virtual void handle(struct evhttp_request*) = 0;
+  virtual void handle(Request) = 0;
   virtual std::string getUrl() const = 0;
 };
 

@@ -46,7 +46,7 @@ void HttpEvent::installHandlers() {
 
 void HttpEvent::handleRequest(struct evhttp_request *req, void *arg) {
   RequestHandler* handler = static_cast<RequestHandler*>(arg);
-  handler->handle(req);
+  handler->handle(Request(req));
 }
 
 void HttpEvent::defaultHandler(struct evhttp_request *req, void *arg) {

@@ -7,7 +7,7 @@ class StaticHandler : public RequestHandler {
  public:
   StaticHandler(std::string);
   ~StaticHandler();
-  void handle(struct evhttp_request *request) override;
+  void handle(Request) override;
   std::string getUrl() const override;
  private:
   std::string staticFolderPath_;

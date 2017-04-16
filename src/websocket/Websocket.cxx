@@ -6,7 +6,7 @@ using websocketpp::lib::bind;
 
 Websocket::Websocket() {
   websocketServer_.init_asio();
-//  websocketServer_.set_reuse_addr(true);
+  websocketServer_.set_reuse_addr(true);
 
   websocketServer_.set_http_handler(bind(&Websocket::onHttp, this, _1));
   websocketServer_.set_open_handler(bind(&Websocket::onOpen, this, _1));
@@ -33,6 +33,11 @@ void Websocket::run(uint16_t port) {
 void Websocket::onOpen(connection_hdl hdl) {
   {
     lock_guard<mutex> guard(mutexActionLock_);
+    auto connection = websocketServer_.get_con_from_hdl(hdl);
+    auto body = connection->get_request_body();
+    auto key = connection->get_request_header("Sec-WebSocket-Key");
+    std::cout << body << std::endl;
+    std::cout << key << std::endl;
     mutexActions_.push(Action(SUBSCRIBE, hdl));
   }
   mutexActionCondition_.notify_one();
@@ -55,10 +60,13 @@ void Websocket::onMessage(connection_hdl hdl, Types::MessagePtr msg) {
 }
 
 void Websocket::onHttp(connection_hdl hdl) {
-  Types::WebsocketBaseServer::connection_ptr connection =
-      websocketServer_.get_con_from_hdl(hdl);
-  std::string str = connection->get_request_body();
-  std::cout << "ULTRA RESPONSE -> " << str << std::endl;
+  {
+    lock_guard<mutex> guard(mutexActionLock_);
+    Types::WebsocketBaseServer::connection_ptr connection =
+        websocketServer_.get_con_from_hdl(hdl);
+    std::string str = connection->get_request_body();
+    std::cout << "ULTRA RESPONSE -> " << str << std::endl;
+  }
 }
 
 void Websocket::processMessage() {
@@ -83,7 +91,6 @@ void Websocket::processMessage() {
     } else if (action.type == MESSAGE) {
       lock_guard<mutex> guard(mutexConnectionLock_);
 
-      Types::ConnectionList::iterator it;
       for (auto connection : mutexConnections_) {
         websocketServer_.send(connection, action.message->get_payload(), action.message->get_opcode());
       }

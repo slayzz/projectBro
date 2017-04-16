@@ -16,13 +16,34 @@ StaticHandler::StaticHandler(std::string path) {
 
 StaticHandler::~StaticHandler() { }
 
-void StaticHandler::handle(struct evhttp_request *request) {
+
+std::string StaticHandler::getUrl() const {
+  return staticFolderPath_;
+}
+
+void StaticHandler::readFile(std::string uri, char* buffer) {
+  std::ifstream file(staticFolderPath_ + uri);
+  if (!file.is_open()) {
+    throw std::runtime_error("Cant open this file");
+  }
+
+  int position = 0;
+  while(!file.eof()) {
+    file.get(buffer[position++]);
+  }
+  file.close();
+  buffer[position-1] = '\0';
+}
+
+void StaticHandler::handle(Request req) {
+  auto request = req.getRawRequest();
   auto evb = evbuffer_new();
   const auto accept = std::string(evhttp_find_header(request->input_headers, "Accept"));
   const auto uri = std::string(evhttp_request_get_uri(request));
   const auto parsedUri = Common::split(uri, std::string("/"));
   const Common::FilePair filePair = Common::getFilePair(parsedUri.back());
   std::string contentType;
+
   if (filePair.second == "js") {
     contentType = "application/javascript; charset=utf-8";
   } else if (filePair.second == "css") {
@@ -45,22 +66,5 @@ void StaticHandler::handle(struct evhttp_request *request) {
   evbuffer_free(evb);
 
   delete[] fillBuffer;
-}
 
-std::string StaticHandler::getUrl() const {
-  return staticFolderPath_;
-}
-
-void StaticHandler::readFile(std::string uri, char* buffer) {
-  std::ifstream file(staticFolderPath_ + uri);
-  if (!file.is_open()) {
-    throw std::runtime_error("Cant open this file");
-  }
-
-  int position = 0;
-  while(!file.eof()) {
-    file.get(buffer[position++]);
-  }
-  file.close();
-  buffer[position-1] = '\0';
 }

@@ -4,7 +4,7 @@ project(websocket)
 #include_directories(src)
 
 #set (SOURCE_EXE main.cpp src/handler.cpp src/handler.h)
-set(SOURCE_EXE main.cxx)
+set(SOURCE_EXE main.cxx src/websocket/Storage.cxx src/websocket/Storage.hxx src/server/Cookie.cxx src/server/Cookie.hxx src/server/Middleware.cxx src/server/Middleware.hxx src/server/Request.cxx src/server/Request.hxx)
 #set(SOURCE_LIB src/server/server.cpp)
 #set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -levent")
 set(CMAKE_CXX_FLAGS "-std=c++11 -levent -pthread")
