@@ -11,6 +11,7 @@ class StaticHandler : public RequestHandler {
   std::string getUrl() const override;
  private:
   std::string staticFolderPath_;
+  void readFile(std::string uri, char* buffer);
 };
 
 #endif //WEBSOCKET_STATICHANDLER_HXX

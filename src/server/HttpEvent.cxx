@@ -63,15 +63,12 @@ void HttpEvent::defaultHandler(struct evhttp_request *req, void *arg) {
 
     evbuffer_add(evb, buffer, strlen(buffer));
 
-// Set HTTP headers
     evhttp_add_header(req->output_headers, "Server", serverName);
     evhttp_add_header(req->output_headers, "Connection", "close");
     evhttp_add_header(req->output_headers, "Content-Length",
                       std::to_string(strlen(buffer)).c_str());
 
-// Send reply
     evhttp_send_reply(req, HTTP_NOTFOUND, "Not Found", evb);
-// Free memory
     evbuffer_free(evb);
   }
 }

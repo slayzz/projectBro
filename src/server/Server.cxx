@@ -4,7 +4,6 @@
 #include <event2/bufferevent.h>
 
 #include "Server.hxx"
-#include "RequestHandler.hxx"
 #include "handlers/MainHandler.hxx"
 
 const unsigned int Server::MAX_CONNECTS = 5;

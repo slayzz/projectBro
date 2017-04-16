@@ -5,11 +5,13 @@ using websocketpp::lib::placeholders::_2;
 using websocketpp::lib::bind;
 
 Websocket::Websocket() {
-  websocketServer.init_asio();
+  websocketServer_.init_asio();
+//  websocketServer_.set_reuse_addr(true);
 
-  websocketServer.set_open_handler(bind(&Websocket::onOpen, this, _1));
-  websocketServer.set_close_handler(bind(&Websocket::onClose, this, _1));
-  websocketServer.set_message_handler(bind(&Websocket::onMessage, this, _1, _2));
+  websocketServer_.set_http_handler(bind(&Websocket::onHttp, this, _1));
+  websocketServer_.set_open_handler(bind(&Websocket::onOpen, this, _1));
+  websocketServer_.set_close_handler(bind(&Websocket::onClose, this, _1));
+  websocketServer_.set_message_handler(bind(&Websocket::onMessage, this, _1, _2));
 }
 
 Websocket::~Websocket() { }
@@ -18,67 +20,72 @@ void Websocket::run(uint16_t port) {
   try {
     thread t(bind(&Websocket::processMessage, this));
 
-    websocketServer.listen(port);
-    websocketServer.start_accept();
-
-    websocketServer.run();
+    websocketServer_.listen(port);
+    websocketServer_.start_accept();
+    websocketServer_.run();
 
     t.join();
   } catch (const std::exception & e) {
     std::cout << e.what() << std::endl;
   }
 }
+
 void Websocket::onOpen(connection_hdl hdl) {
   {
-    lock_guard<mutex> guard(mutexActionLock);
-    mutexActions.push(Action(SUBSCRIBE, hdl));
+    lock_guard<mutex> guard(mutexActionLock_);
+    mutexActions_.push(Action(SUBSCRIBE, hdl));
   }
-  mutexActionCondition.notify_one();
+  mutexActionCondition_.notify_one();
 }
 
 void Websocket::onClose(connection_hdl hdl) {
   {
-    lock_guard<mutex> guard(mutexActionLock);
-    mutexActions.push(Action(UNSUBSCRIBE, hdl));
+    lock_guard<mutex> guard(mutexActionLock_);
+    mutexActions_.push(Action(UNSUBSCRIBE, hdl));
   }
-  mutexActionCondition.notify_one();
+  mutexActionCondition_.notify_one();
 }
 
 void Websocket::onMessage(connection_hdl hdl, Types::MessagePtr msg) {
   {
-    lock_guard<mutex> guard(mutexActionLock);
-    mutexActions.push(Action(MESSAGE, hdl, msg));
+    lock_guard<mutex> guard(mutexActionLock_);
+    mutexActions_.push(Action(MESSAGE, hdl, msg));
   }
-  mutexActionCondition.notify_one();
+  mutexActionCondition_.notify_one();
+}
+
+void Websocket::onHttp(connection_hdl hdl) {
+  Types::WebsocketBaseServer::connection_ptr connection =
+      websocketServer_.get_con_from_hdl(hdl);
+  std::string str = connection->get_request_body();
+  std::cout << "ULTRA RESPONSE -> " << str << std::endl;
 }
 
 void Websocket::processMessage() {
   while(true) {
-    unique_lock<mutex> lock(mutexActionLock);
+    unique_lock<mutex> lock(mutexActionLock_);
 
-    while(mutexActions.empty()) {
-      mutexActionCondition.wait(lock);
+    while(mutexActions_.empty()) {
+      mutexActionCondition_.wait(lock);
     }
 
-    Action action = mutexActions.front();
-    mutexActions.pop();
+    Action action = mutexActions_.front();
+    mutexActions_.pop();
 
     lock.unlock();
 
     if (action.type == SUBSCRIBE) {
-      lock_guard<mutex> guard(mutexConnectionLock);
-      mutexConnections.insert(action.handler);
+      lock_guard<mutex> guard(mutexConnectionLock_);
+      mutexConnections_.insert(action.handler);
     } else if (action.type == UNSUBSCRIBE) {
-      lock_guard<mutex> guard(mutexConnectionLock);
-      mutexConnections.erase(action.handler);
+      lock_guard<mutex> guard(mutexConnectionLock_);
+      mutexConnections_.erase(action.handler);
     } else if (action.type == MESSAGE) {
-      lock_guard<mutex> guard(mutexConnectionLock);
+      lock_guard<mutex> guard(mutexConnectionLock_);
 
       Types::ConnectionList::iterator it;
-      for (auto connection : mutexConnections) {
-        std::cout << action.message->get_payload() << std::endl;
-        websocketServer.send(connection, action.message->get_payload(), action.message->get_opcode());
-//        websocketServer.send(connection, action.message);
+      for (auto connection : mutexConnections_) {
+        websocketServer_.send(connection, action.message->get_payload(), action.message->get_opcode());
       }
     }
   }

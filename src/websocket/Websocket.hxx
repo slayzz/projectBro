@@ -45,26 +45,21 @@ class Websocket {
   void run(uint16_t);
 
  private:
-  Types::WebsocketBaseServer websocketServer;
-  Types::ConnectionList mutexConnections;
-  std::queue<Action> mutexActions;
+  Types::WebsocketBaseServer websocketServer_;
+  Types::ConnectionList mutexConnections_;
+  std::queue<Action> mutexActions_;
 
-  mutex mutexActionLock;
-  mutex mutexConnectionLock;
-  condition_variable mutexActionCondition;
+  mutex mutexActionLock_;
+  mutex mutexConnectionLock_;
+  condition_variable mutexActionCondition_;
 
   void onOpen(connection_hdl);
   void onClose(connection_hdl);
   void onMessage(connection_hdl, Types::MessagePtr);
+  void onHttp(connection_hdl hdl);
 
   void processMessage();
 
 };
-
-void on_message(Types::WebsocketBaseServer *s, websocketpp::connection_hdl hdl,
-                Types::MessagePtr msg);
-void websocketRunner();
-
-
 
 #endif //WEBSOCKET_WEBSOCKET_HXX

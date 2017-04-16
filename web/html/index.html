@@ -13,39 +13,8 @@
 </form>
 
 <!-- здесь будут появляться входящие сообщения -->
-<div id="subscribe1"></div>
-<div id="subscribe2"></div>
+<div id="subscribe"></div>
 
-<!--<script src="../js/browser.js">-->
-<script>
-if (!window.WebSocket) {
-	document.body.innerHTML = 'WebSocket в этом браузере не поддерживается.';
-}
-
-// создать подключение
-var socket = new WebSocket("ws://localhost:9000");
-
-// отправить сообщение из формы publish
-document.forms.publish.onsubmit = function() {
-  var outgoingMessage = this.message.value;
-
-  socket.send(outgoingMessage);
-  return false;
-};
-
-// обработчик входящих сообщений
-socket.onmessage = function(event) {
-  var incomingMessage = event.data;
-  showMessage(incomingMessage, 'subscribe1'); 
-};
-
-// показать сообщение в div#subscribe
-function showMessage(message, id) {
-  var messageElem = document.createElement('div');
-  messageElem.appendChild(document.createTextNode(message));
-  document.getElementById(id).appendChild(messageElem);
-}
-
-</script>
+<script src="/js/browser.js"></script>
 </body>
 </html>

@@ -18,4 +18,8 @@ namespace Types {
       ConnectionList;
 }
 
+namespace Globals {
+  static char SERVER_NAME[] = "MegA ServeR";
+}
+
 #endif //WEBSOCKET_GLOBALS_HXX
