@@ -1,50 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="referrer" content="no-referrer" />
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
 </head>
+
 <body>
-<!-- форма для отправки сообщений -->
-<form name="publish">
-  <input type="text" name="message"/>
-  <input type="submit" value="Отправить"/>
-</form>
+<div class="content">
+	<div class="header">
+		<span style="position: relative; top: 4px; right: 15px;">BroChat</span>
+	</div>
 
-<!-- здесь будут появляться входящие сообщения -->
-<div id="subscribe"></div>
+	<div class="contacts">
+		
+	</div>
+	<!-- здесь будут появляться входящие сообщения -->
+	<div class="chatbox">
+		<div id="subscribe">
+			
+		</div>		
+	</div>
+	<form name="publish">
+		  
+		  <button class="submit" type="submit">Написать своему Бро</button>
+	</form>
+			
+</div>
+<script src="../js/browser.js"></script>
 
-<!--<script src="../js/browser.js">-->
-<script>
-if (!window.WebSocket) {
-	document.body.innerHTML = 'WebSocket в этом браузере не поддерживается.';
-}
-
-// создать подключение
-var socket = new WebSocket("ws://localhost:9000");
-
-// отправить сообщение из формы publish
-document.forms.publish.onsubmit = function() {
-  var outgoingMessage = this.message.value;
-
-  socket.send(outgoingMessage);
-  return false;
-};
-
-// обработчик входящих сообщений
-socket.onmessage = function(event) {
-  var incomingMessage = event.data;
-  showMessage(incomingMessage); 
-};
-
-// показать сообщение в div#subscribe
-function showMessage(message) {
-  var messageElem = document.createElement('div');
-  messageElem.appendChild(document.createTextNode(message));
-  document.getElementById('subscribe').appendChild(messageElem);
-}
-
-</script>
 </body>
 </html>

@@ -3,20 +3,30 @@ if (!window.WebSocket) {
 }
 
 // создать подключение
-var socket = new WebSocket("ws://localhost:9000");
+var socket = new WebSocket("ws://localhost:8000");
+
+socket.onopen = function() {
+ var client = {
+ 	id: "clientID",
+ 	lastmessage: "HeyBro",
+ 	type: "firstconnection" 
+ }
+  
+
 
 // отправить сообщение из формы publish
 document.forms.publish.onsubmit = function() {
-  var outgoingMessage = this.message.value;
+  
 
-  socket.send(outgoingMessage);
+  socket.send(JSON.stringify(client));
   return false;
 };
 
 // обработчик входящих сообщений
 socket.onmessage = function(event) {
-  var incomingMessage = event.data;
-  showMessage(incomingMessage); 
+  var incomingMessage = JSON.parse(event.data);
+  showMessage(incomingMessage.lastmessage); 
+  console.log(incomingMessage.lastmessage)
 };
 
 // показать сообщение в div#subscribe
@@ -25,3 +35,4 @@ function showMessage(message) {
   messageElem.appendChild(document.createTextNode(message));
   document.getElementById('subscribe').appendChild(messageElem);
 }
+};
