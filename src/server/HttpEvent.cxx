@@ -52,7 +52,7 @@ void HttpEvent::handleRequest(struct evhttp_request *req, void *arg) {
 void HttpEvent::defaultHandler(struct evhttp_request *req, void *arg) {
   StaticHandler* staticHandler = static_cast<StaticHandler*>(arg);
   try {
-    staticHandler->handle(req);
+    staticHandler->handle(Request(req));
   } catch(std::exception e) {
     std::cout << e.what() << std::endl;
     auto evb = evbuffer_new();

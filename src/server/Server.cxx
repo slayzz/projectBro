@@ -8,7 +8,7 @@
 
 const unsigned int Server::MAX_CONNECTS = 5;
 
-Server::Server(uint16_t port) {
+Server::Server(uint16_t port): port_(port) {
   int retCode;
   struct sockaddr_in serverAddress;
 
@@ -47,6 +47,7 @@ Server::~Server() {
 }
 
 void Server::run() {
+  std::cout << "Server run on " << port_ << std::endl;
   listen(socketFd_, Server::MAX_CONNECTS);
   installHandlers();
   httpEvent_->run();

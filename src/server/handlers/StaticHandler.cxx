@@ -36,12 +36,10 @@ void StaticHandler::readFile(std::string uri, char* buffer) {
 }
 
 void StaticHandler::handle(Request req) {
-  auto request = req.getRawRequest();
-  auto evb = evbuffer_new();
-  const auto accept = std::string(evhttp_find_header(request->input_headers, "Accept"));
-  const auto uri = std::string(evhttp_request_get_uri(request));
+  const auto accept = req.getHeader("Accept");
+  const auto uri = req.getUri();
   const auto parsedUri = Common::split(uri, std::string("/"));
-  const Common::FilePair filePair = Common::getFilePair(parsedUri.back());
+  const auto filePair = Common::getFilePair(parsedUri.back());
   std::string contentType;
 
   if (filePair.second == "js") {
@@ -54,17 +52,13 @@ void StaticHandler::handle(Request req) {
 
   char* fillBuffer = new char[10000];
   readFile(uri, fillBuffer);
-  evbuffer_add(evb, fillBuffer, strlen(fillBuffer));
 
-  evhttp_add_header(request->output_headers, "Server", Globals::SERVER_NAME);
-  evhttp_add_header(request->output_headers, "Content-Length",
-                    std::to_string(strlen(fillBuffer)).c_str());
-  evhttp_add_header(request->output_headers, "Content-Type", contentType.c_str());
+  req.setHeader("Content-Length", std::move(std::to_string(strlen(fillBuffer))));
+  req.setHeader("Content-Type", std::move(contentType));
 
-  evhttp_send_reply(request, HTTP_OK, "OK", evb);
 
-  evbuffer_free(evb);
-
+  req.writeBody(fillBuffer);
+  req.end();
   delete[] fillBuffer;
 
 }

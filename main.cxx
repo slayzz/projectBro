@@ -17,18 +17,18 @@ void startWebsocket() {
 using namespace std;
 
 int main(int argc, char *argv[]) {
-  pid_t pid = fork();
-  if (pid == 0) {
-    // child process
-    startWebsocket();
-  }
-  else if (pid > 0) {
+//  pid_t pid = fork();
+//  if (pid == 0) {
+//    // child process
+//    startWebsocket();
+//  }
+//  else if (pid > 0) {
     // parent process
     startServer();
-  } else {
+//  } else {
     // fork failed
-    std::cerr << "fork() failed!\n" << std::endl;
-    return 1;
-  }
+//    std::cerr << "fork() failed!\n" << std::endl;
+//    return 1;
+//  }
   return 0;
 }

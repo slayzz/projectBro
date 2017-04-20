@@ -34,6 +34,7 @@ public:
 private:
   HttpEvent* httpEvent_;
   Types::SOCKET socketFd_;
+  uint16_t port_;
 
   static const unsigned int MAX_CONNECTS;
 

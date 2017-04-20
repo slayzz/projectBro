@@ -6,19 +6,46 @@ Request::Request(struct evhttp_request *req) :
     outputBufferHeaders_(evhttp_request_get_output_headers(req)),
     buffer_(evbuffer_new()) {
   std::cout << "Constructor" << std::endl;
+  defaults();
   parse();
 }
 
 Request::~Request() {
+  std::cout << "Destructor" << std::endl;
   evbuffer_free(buffer_);
 }
 
-Request::Request(const Request &) {
-  std::cout << "Copy constructor" << std::endl;
+Request::Request(Request &&that) {
+  std::cout << "Move constructor" << std::endl;
+
+  headers_ = std::move(that.headers_);
+  method_ = std::move(that.method_);
+  uri_ = std::move(that.uri_);
+  outputBufferHeaders_ = that.outputBufferHeaders_;
+  evhhtpRequestBase_ = that.evhhtpRequestBase_;
+  buffer_ = that.buffer_;
+
+  that.outputBufferHeaders_ = nullptr;
+  that.evhhtpRequestBase_ = nullptr;
+  that.buffer_ = nullptr;
 }
 
-Request &Request::operator=(const Request &) {
-  std::cout << "Copy assigment" << std::endl;
+Request &Request::operator=(Request &&that) {
+  std::cout << "Move assignment" << std::endl;
+  if (this != &that) {
+    headers_ = std::move(that.headers_);
+    method_ = std::move(that.method_);
+    uri_ = std::move(that.uri_);
+    outputBufferHeaders_ = that.outputBufferHeaders_;
+    evhhtpRequestBase_ = that.evhhtpRequestBase_;
+    buffer_ = that.buffer_;
+
+    that.outputBufferHeaders_ = nullptr;
+    that.evhhtpRequestBase_ = nullptr;
+    that.buffer_ = nullptr;
+
+  }
+  return *this;
 }
 
 void Request::parse() {
@@ -52,8 +79,13 @@ void Request::parse() {
   }
 }
 
-std::string &Request::getHeader(const std::string &name) {
-  return headers_.find(name)->second;
+
+const std::string Request::getHeader(const std::string &name) const {
+  auto header = headers_.find(name);
+  if(header == headers_.end()) {
+    return std::string("");
+  }
+  return header->second;
 }
 
 std::string Request::getUri() {
@@ -71,13 +103,20 @@ void Request::end() {
 void Request::end(const int code, const std::string &status) {
   evhttp_send_reply(evhhtpRequestBase_, code, status.c_str(), buffer_);
 }
+
 void Request::setHeader(const std::string &name, const std::string &value) {
   evhttp_add_header(outputBufferHeaders_, name.c_str(), value.c_str());
 }
+
 struct evhttp_request *Request::getRawRequest() {
   return evhhtpRequestBase_;
 }
+
 void Request::writeBody(const std::string &content) {
   evbuffer_add(buffer_, content.c_str(), content.length());
+}
+
+void Request::defaults() {
+  setHeader("Server", Globals::SERVER_NAME);
 }
 
