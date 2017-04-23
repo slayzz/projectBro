@@ -5,19 +5,15 @@ Request::Request(struct evhttp_request *req) :
     evhhtpRequestBase_(req), uri_(evhttp_request_get_uri(req)),
     outputBufferHeaders_(evhttp_request_get_output_headers(req)),
     buffer_(evbuffer_new()) {
-  std::cout << "Constructor" << std::endl;
   defaults();
   parse();
 }
 
 Request::~Request() {
-  std::cout << "Destructor" << std::endl;
   evbuffer_free(buffer_);
 }
 
 Request::Request(Request &&that) {
-  std::cout << "Move constructor" << std::endl;
-
   headers_ = std::move(that.headers_);
   method_ = std::move(that.method_);
   uri_ = std::move(that.uri_);
@@ -31,7 +27,6 @@ Request::Request(Request &&that) {
 }
 
 Request &Request::operator=(Request &&that) {
-  std::cout << "Move assignment" << std::endl;
   if (this != &that) {
     headers_ = std::move(that.headers_);
     method_ = std::move(that.method_);

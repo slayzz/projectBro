@@ -76,3 +76,5 @@ Thumbs.db
 cmake-build-debug
 build
 debug
+lib/session_manager/target
+lib/session.sess
