@@ -81,19 +81,21 @@ pub mod named_fifo {
 
   impl App {
     pub fn go() {
+      // // run_session("Websocket:message:qwerasdfzxcv:pipka");
+      // // if let Some(val) = run_session("Websocket:read") {
+      // //   println!("{}", val.1);
+      // // }
+      // run_session("Websocket:new:superlol");
       loop {
         let mut fifo_control = FifoControl::new();
         let mut buffer = Vec::new();
         fifo_control.read(&mut buffer);
 
-        let (session_status, message) =
-          run_session(::std::str::from_utf8(&buffer).unwrap()).unwrap();
-        println!("Status -> {}, messages -> {}",
-                 session_status.to_string(),
-                 message);
-        // run_session("FromServer:qwerasdfzxcv");
-        fifo_control.write(b"superlol\n");
-        // ::std::thread::sleep(::std::time::Duration::new(3, 0));
+        if let Some((status, message)) = run_session(::std::str::from_utf8(&buffer).unwrap()) {
+          fifo_control.write(message.as_bytes());
+        } else {
+          unimplemented!();
+        }
       }
     }
   }
