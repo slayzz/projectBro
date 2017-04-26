@@ -48,7 +48,7 @@ void test() {
     exit(EXIT_FAILURE);
   }
 
-  char willBeWrited[] = "FromServer:zxcvasdfqwer";
+  char willBeWrited[] = "Websocket:message:superlol:sisoudf";
 
   counter = write(fdServer, willBeWrited, strlen(willBeWrited));
   if (counter < 0) {

@@ -1,5 +1,7 @@
 extern crate libc;
 mod filesaver;
+mod message;
+mod handlers;
 
 pub mod named_fifo { 
   use std::fs::{File, OpenOptions};
@@ -47,7 +49,7 @@ pub mod named_fifo {
     let mut status: c_int = unsafe {
       mkfifo(CString::new(DAEMON_SESSION).unwrap().as_ptr(), S_IRWXU)
     };
-    // let err_num: c_int = 17;
+
     unsafe {
       if status < 0 && *err != 17 as c_int {
         perror(CString::new("mkfifo").unwrap().as_ptr());
@@ -81,20 +83,15 @@ pub mod named_fifo {
 
   impl App {
     pub fn go() {
-      // // run_session("Websocket:message:qwerasdfzxcv:pipka");
-      // // if let Some(val) = run_session("Websocket:read") {
-      // //   println!("{}", val.1);
-      // // }
-      // run_session("Websocket:new:superlol");
       loop {
         let mut fifo_control = FifoControl::new();
         let mut buffer = Vec::new();
         fifo_control.read(&mut buffer);
 
-        if let Some((status, message)) = run_session(::std::str::from_utf8(&buffer).unwrap()) {
+        if let Some(message) = run_session(::std::str::from_utf8(&buffer).unwrap()) {
           fifo_control.write(message.as_bytes());
         } else {
-          unimplemented!();
+          fifo_control.write("".as_bytes());
         }
       }
     }
